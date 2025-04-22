@@ -18,18 +18,27 @@ public class Program
     /// <returns></returns>*/
     public static async Task<int> Main(string[] args)
     {
+        string homeEnvVariable = string.Empty;
+
         if (args.Length < 2 || string.IsNullOrWhiteSpace(args[0]) || args[0] != "--homeEnvVariable" || string.IsNullOrWhiteSpace(args[1]))
         {
-            Console.WriteLine("The --homeEnvVariable argument with a value is required");
-            return 1;
-        } 
-        
+            homeEnvVariable = Environment.GetEnvironmentVariable("HOME");
+            if (string.IsNullOrWhiteSpace(homeEnvVariable))
+            {
+                Console.WriteLine("The --homeEnvVariable argument with a value is required");
+                return 1;
+            }
+        }
+        else
+        {
+            homeEnvVariable = args[1];
+        }
+
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
         
-        var homeEnvVariable = args[1];
         Environment.SetEnvironmentVariable("HOME", homeEnvVariable);
         
         var logger = new LoggerConfiguration()
