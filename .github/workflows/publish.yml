@@ -1,12 +1,7 @@
 name: Publish DotNetMetadataMcpServer
 
 on:
-  workflow_dispatch:
-    inputs:
-      versionOverride:
-        description: 'Override version (leave empty to use 1.0.0 with auto-incremented patch)'
-        required: false
-        type: string
+  workflow_dispatch: false
 
 jobs:
   build:
