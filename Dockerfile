@@ -19,4 +19,5 @@ RUN dotnet publish "DotNetMetadataMcpServer.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV HOME /app
 ENTRYPOINT ["dotnet", "DotNetMetadataMcpServer.dll"]
